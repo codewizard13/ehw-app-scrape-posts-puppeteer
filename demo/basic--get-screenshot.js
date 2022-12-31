@@ -1,15 +1,8 @@
 /*
-Project Name:   EHW APP: App: Scrape Blog Posts with Puppet
+Purpose:        DEMO: How to Get Simple Screenshot with Puppeteer
 Date Created:   12/31/22
 Programmer:     Eric L. Hepperle
-
-File Version:    1.00.00
 */
-
-/* _____________ VARIABLES __________________ */
-
-
-/* _____________ ALGORITHM __________________ */
 
 const Puppeteer = require('puppeteer')
 
