@@ -1,0 +1,23 @@
+{
+  "name": "ehw-app-scrape-posts-puppeteer",
+  "version": "1.0.0",
+  "description": "| INFO PROPERTY | VALUE                                          |\r | ------------- | ---------------------------------------------- |\r | Program Name  | **App: Scrape Blog Posts with Puppet** |\r | File Name     | README.md                                      |\r | Date Created  | 12/31/22                                       |\r | Date Modified | --                                             |\r | Version       | 0.0.1                                          |\r | Programmer    | **Eric Hepperle**                              |",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codewizard13/ehw-app-scrape-posts-puppeteer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codewizard13/ehw-app-scrape-posts-puppeteer/issues"
+  },
+  "homepage": "https://github.com/codewizard13/ehw-app-scrape-posts-puppeteer#readme",
+  "dependencies": {
+    "puppeteer": "^19.4.1"
+  }
+}
