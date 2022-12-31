@@ -11,7 +11,7 @@ async function start() {
   const browser = await Puppeteer.launch()
   const page = await browser.newPage()
   await page.goto('https://learnwebcode.github.io/practice-requests/')
-  await page.screenshot({path: "amazing2.png"})
+  await page.screenshot({path: "amazing.png"})
 
   await browser.close()
 }
