@@ -1,18 +1,8 @@
 /*
-Project Name:   EHW APP: App: Scrape Blog Posts with Puppet
+Purpose:        DEMO: How to Get IMG and LINK (A) Tag URLS
 Date Created:   12/31/22
 Programmer:     Eric L. Hepperle
-
-TESTING grabbing url list from 
-https://www.elijahlist.com/words/index.html?page=3
-
-File Version:    4
 */
-
-/* _____________ VARIABLES __________________ */
-
-
-/* _____________ ALGORITHM __________________ */
 
 const Puppeteer = require('puppeteer')
 const fs = require('fs/promises') // we don't have to write messy callback code
