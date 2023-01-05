@@ -6,7 +6,7 @@ Programmer:     Eric L. Hepperle
 TESTING grabbing url list from 
 https://www.elijahlist.com/words/index.html?page=3
 
-File Version:    4
+File Version:    5
 
 RESOURCES:
 - https://www.youtube.com/watch?v=lgyszZhAZOI
@@ -34,53 +34,80 @@ DEFINE data object as having
   EMPTY head object
   EMPTY body object
 
+GET THE FOLLOWING:
+- ALL meta tags
+- ALL style tags
+- ALL script tags
+- ALL link tags
 
+- TITLE
+- AUTHOR
+- Publish date
+- Steve Desk
+- AUTHOR LOCATION
+- AUTHOR PHOTO
+- Word Content
+- Author email
+- Author Website
+- Author Ministry name
+- Author Description
+
+RETURN as object
 
 */
 
 
-
+const { filenameToLines, parseCSVToArray, testUrls} = require(`${__dirname}/common/io`)
 
 const Puppeteer = require('puppeteer')
-const fs = require('fs/promises') // we don't have to write messy callback code
+const cheerio = require('cheerio');
+
+const fsp = require('fs/promises') // we don't have to write messy callback code
+const fs = require('fs')
 const { dirname } = require('path')
 
-// const URL_WORD_LOC = __dirname + "/elijahWordSample.htm"
-// const URL_WORD_LOC = 'file://' + "/elijahWordSample.htm"
-// const URL_WORD_LOC = dirname("/elijahWordSample.htm") + "/elijahWordSample.htm"
-const URL_WORD_LOC = replaceBackslash( __dirname )
-// `${__dirname}/../../../docs/sowpods.txt`
-
-const url_elijah = "https://www.elijahlist.com/words/index.html?page=3"
-const URL_SAMPLE_WORD = "https://www.elijahlist.com/words/display_word.html?ID=28023"
-const URL_EHW = "https://erichepperle.com"
-const url_lwc = "https://learnwebcode.github.io/practice-requests/"
-const targetSelector = 'nav[aria-label="Page navigation"]:first-of-type + div > a'
-
-
-async function start() {
-
-  console.log(URL_WORD_LOC)
-  replaceBackslash(URL_WORD_LOC)
+async function getRemotePage() {
 
   const browser = await Puppeteer.launch()
   const page = await browser.newPage()
   await page.goto(URL_WORD_LOC)
 
+}
+
+function getLocalPage() {
+
+  filePath = `${__dirname}/elijahWordSample.htm`
+  console.log({filePath})
+
+  const file = fs.readFileSync(filePath).toString()
+  // console.log(file)
+  const $ = cheerio.load(file);
+
+  let title = $('title').text()
+  console.log({title})
+
+  return file
+
+}
+
+async function getPageDataAsJSON(URL) {}
+
+
+
+async function start() {
+
+  const html = getLocalPage()
+
   // const html = await page.content()
   // console.log(html)
   const head = {}
   const body = {}
+  
+  // const title = html.querySelector('title')
+  // console.log({title})
 
-  const title = await page.evaluate(() => document.title)
-  console.log(head)
-  head.title = title
 
-  // const title = await page.evaluate(() => document.title)
-  // const title = await page.evaluate(() => document.title)
-  // const title = await page.evaluate(() => document.title)
-  // const title = await page.evaluate(() => document.title)
-  console.log(head)
+
 
 
   // Save data to HTML file
@@ -90,14 +117,6 @@ async function start() {
 
 
 
-  await browser.close()
+  // await browser.close()
 }
 start()
-
-
-function replaceBackslash(string) {
-
-  const replaced = string.replace(/\//g, ' ');
-console.log(replaced);
-
-}
