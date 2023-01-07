@@ -66,6 +66,7 @@ const fsp = require('fs/promises') // we don't have to write messy callback code
 const fs = require('fs')
 const { dirname } = require('path')
 
+// INACTIVE YET
 async function getRemotePage() {
 
   const browser = await Puppeteer.launch()
@@ -74,17 +75,55 @@ async function getRemotePage() {
 
 }
 
+
 function getLocalPage() {
 
+  // Define local html file path
   filePath = `${__dirname}/elijahWordSample.htm`
   console.log({filePath})
 
+  // Store local html file to be parse
   const file = fs.readFileSync(filePath).toString()
-  // console.log(file)
   const $ = cheerio.load(file);
 
+  // Get title
   let title = $('title').text()
   console.log({title})
+
+  // Get meta tags
+  let metas = $('meta')
+  metas.each((_, e) => {
+    let row = $(e) //.replace(/(\s+)/g, ' ')
+    // console.log(row)
+    attribs = row.attr()
+    console.log({attribs})
+  })
+
+  // Get style tags
+  let styleTags = $('style')
+  styleTags.each((_, e) => {
+    let row = $(e)
+    let attribs = row.attr()
+    let content = row.html().split(';')
+    console.log(`Style tag attributes:`, attribs)
+    console.table(attribs)
+    console.log(`Style tag inner content:`)
+    // let parsedJSON = JSON.parse(content)
+    // console.log(parsedJSON)
+    // console.log(JSON.stringify(content), null, 4)
+    console.log(content)
+  })
+
+
+
+
+
+
+
+
+  // console.log({metas})
+  // const metasOut = Array.from(Object.entries(metas)).forEach(tag => tag)
+  // console.log(metasOut)
 
   return file
 
