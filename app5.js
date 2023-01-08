@@ -27,7 +27,7 @@ const LOC_PATH = `${__dirname}/locfiles`
 function getLocalPage() {
 
   // Define local html file path
-  filepath = `${LOC_PATH}/elijahWordSample.htm`
+  filepath = `${LOC_PATH}/sample_01.htm`
   console.log(filepath)
 
   getContentInfo(filepath)
