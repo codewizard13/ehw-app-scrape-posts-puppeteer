@@ -57,7 +57,7 @@ RETURN as object
 */
 
 
-const { filenameToLines, parseCSVToArray, testUrls} = require(`${__dirname}/common/io`)
+const { filenameToLines, parseCSVToArray, testUrls, CONSTANTS } = require(`${__dirname}/common/io`)
 
 const Puppeteer = require('puppeteer')
 const cheerio = require('cheerio');
@@ -65,6 +65,16 @@ const cheerio = require('cheerio');
 const fsp = require('fs/promises') // we don't have to write messy callback code
 const fs = require('fs')
 const { dirname } = require('path')
+
+// Define local html file path
+filePath = `${__dirname}/elijahWordSample.htm`
+console.log({ filePath })
+
+// Store local html file to be parse
+const file = fs.readFileSync(filePath).toString()
+const $ = cheerio.load(file);
+
+
 
 // INACTIVE YET
 async function getRemotePage() {
@@ -78,44 +88,17 @@ async function getRemotePage() {
 
 function getLocalPage() {
 
-  // Define local html file path
-  filePath = `${__dirname}/elijahWordSample.htm`
-  console.log({filePath})
-
-  // Store local html file to be parse
-  const file = fs.readFileSync(filePath).toString()
-  const $ = cheerio.load(file);
 
   // Get title
   let title = $('title').text()
-  console.log({title})
+  console.log({ title })
 
-  // Get meta tags
-  let metas = $('meta')
-  metas.each((_, e) => {
-    let row = $(e) //.replace(/(\s+)/g, ' ')
-    // console.log(row)
-    attribs = row.attr()
-    console.log({attribs})
-  })
+  // getTagsInfo('meta')
+  // getTagsInfo('style')
+  // getTagsInfo('script')
+  // getTagsInfo('link')
 
-  // Get style tags
-  let styleTags = $('style')
-  styleTags.each((_, e) => {
-    let row = $(e)
-    let attribs = row.attr()
-    let content = row.html().split(';')
-    console.log(`Style tag attributes:`, attribs)
-    console.table(attribs)
-    console.log(`Style tag inner content:`)
-    // let parsedJSON = JSON.parse(content)
-    // console.log(parsedJSON)
-    // console.log(JSON.stringify(content), null, 4)
-    console.log(content)
-  })
-
-
-
+  getContentInfo()
 
 
 
@@ -129,7 +112,86 @@ function getLocalPage() {
 
 }
 
-async function getPageDataAsJSON(URL) {}
+
+function getContentInfo() {
+  console.log(`\n${CONSTANTS.horzrule}\n`)
+
+  // Steve's summary before the actual Word
+  const preambleStart = $("p:contains('From the Desks of')")
+  // console.log(preambleStart)
+  const afterPreamble = preambleStart[0]
+
+  let outval = preambleStart[0].parent.name // parent tag name
+  outval = preambleStart[0].nextSibling
+
+
+  /*
+  ALGORITHM:
+  
+  get parent of p tag starting with "From the Desks of" (parent)
+  
+  get inner html of parent.
+  store in var (content)
+  
+  convert content to string
+  split CONTENT_STR at "*************************************"
+  
+  
+  
+  */
+
+  const content = preambleStart[0]
+
+  // content.each((i, el) => {
+  //   console.table($(el))
+  // })
+
+  outval = content
+  console.log(outval)
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Default is synchronous
+function getTagsInfo(tagName) {
+  console.log(`\n${CONSTANTS.horzrule}\n`)
+  let tags = $(tagName)
+  tags.each((_, e) => {
+    let row = $(e)
+    let attribs = row.attr()
+    let content = row.html().split(';')
+    console.log(`${tagName.toUpperCase()} tag attributes:`, attribs)
+    console.table(attribs)
+    console.log(`${tagName.toUpperCase()} tag inner content:`)
+    // let parsedJSON = JSON.parse(content)
+    // console.log(parsedJSON)
+    // console.log(JSON.stringify(content), null, 4)
+    console.log(content)
+  })
+}
+
+
+async function getPageDataAsJSON(URL) { }
 
 
 
@@ -141,7 +203,7 @@ async function start() {
   // console.log(html)
   const head = {}
   const body = {}
-  
+
   // const title = html.querySelector('title')
   // console.log({title})
 
