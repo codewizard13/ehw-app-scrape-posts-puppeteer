@@ -19,62 +19,97 @@ const fsp = require('fs/promises') // we don't have to write messy callback code
 const fs = require('fs')
 const { dirname } = require('path')
 
-// Define local html file path
-filePath = `${__dirname}/elijahWordSample.htm`
-
-// Store local html file to be parsed
-const file = fs.readFileSync(filePath).toString()
-const $ = cheerio.load(file); // USE Cheerio like jQuery
+// Define local html file folder location
+const LOC_PATH = `${__dirname}/locfiles`
 
 
+// This is the "main" function
 function getLocalPage() {
 
+  // Define local html file path
+  filepath = `${LOC_PATH}/elijahWordSample.htm`
+  console.log(filepath)
 
-  // Get title
-  let title = $('title').text()
-  console.log({ title })
-
-
-  getContentInfo()
-
-
-
-
-
-  // console.log({metas})
-  // const metasOut = Array.from(Object.entries(metas)).forEach(tag => tag)
-  // console.log(metasOut)
-
-  return file
+  getContentInfo(filepath)
 
 }
 
 
-function getContentInfo() {
-  console.log(`\n${CONSTANTS.horzrule}\n`)
+function getContentInfo(filePath) {
 
-  // Steve's summary before the actual Word
-  const preambleStart = $("p:contains('From the Desks of')")
-  // console.log(preambleStart)
-  const afterPreamble = preambleStart[0]
+  // Store local html file to be parsed
+  const file = fs.readFileSync(filePath).toString()
+  const $ = cheerio.load(file); // USE Cheerio like jQuery
+  
+  
+    // Get title
+    let title = $('title').text()
+    console.log({ title })
+  
+    console.log(`\n${CONSTANTS.horzrule}\n`)
+  
+    // Steve's summary before the actual Word
+    const startEl = $("p:contains('From the Desks of')")
+    
+    // console.log(startEl)
+    const afterPreamble = startEl[0]
+  
+    let outval = startEl[0].parent.name // parent tag name
+    outval = startEl[0].nextSibling
+  
+  
+  
+  
+    const content = startEl[0]
+  
+    // content.each((i, el) => {
+    //   console.table($(el))
+    // })
+  
+    outval = content
+    console.log(outval)
+  
+  
+  }
 
-  let outval = preambleStart[0].parent.name // parent tag name
-  outval = preambleStart[0].nextSibling
+
+
+// function getContentInfo(filePath) {
+
+// // Store local html file to be parsed
+// const file = fs.readFileSync(filePath).toString()
+// const $ = cheerio.load(file); // USE Cheerio like jQuery
+
+
+//   // Get title
+//   let title = $('title').text()
+//   console.log({ title })
+
+//   console.log(`\n${CONSTANTS.horzrule}\n`)
+
+//   // Steve's summary before the actual Word
+//   const startEl = $("p:contains('From the Desks of')")
+  
+//   // console.log(startEl)
+//   const afterPreamble = startEl[0]
+
+//   let outval = startEl[0].parent.name // parent tag name
+//   outval = startEl[0].nextSibling
 
 
 
 
-  const content = preambleStart[0]
+//   const content = startEl[0]
 
-  // content.each((i, el) => {
-  //   console.table($(el))
-  // })
+//   // content.each((i, el) => {
+//   //   console.table($(el))
+//   // })
 
-  outval = content
-  console.log(outval)
+//   outval = content
+//   console.log(outval)
 
 
-}
+// }
 
 
 
