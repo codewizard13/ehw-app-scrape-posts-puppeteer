@@ -6,9 +6,6 @@ Programmer:     Eric L. Hepperle
 
 PARSE LOCAL FILE FOR HTML
 
-RESOURCES:
-- https://www.youtube.com/watch?v=lgyszZhAZOI
-- https://www.youtube.com/watch?v=S67gyqnYHmI
 */
 
 
