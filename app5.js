@@ -79,20 +79,7 @@ function getContentInfo() {
   outval = preambleStart[0].nextSibling
 
 
-  /*
-  ALGORITHM:
-  
-  get parent of p tag starting with "From the Desks of" (parent)
-  
-  get inner html of parent.
-  store in var (content)
-  
-  convert content to string
-  split CONTENT_STR at "*************************************"
-  
-  
-  
-  */
+
 
   const content = preambleStart[0]
 
