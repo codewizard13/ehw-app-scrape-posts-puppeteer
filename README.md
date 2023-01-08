@@ -23,13 +23,17 @@
 ## Purpose
 
 Scrape blog (local .html/htm file) post data to JSON object
+    
+## NOTES
+### About the demo folder
+One might expect the `demo/` folder to hold a working demonstration of the app. Nope. This folder holds individual applications of concepts I learned while building this project. Basically, these are all standlone MVPs and the ones that start with "basic" pretty much handle one concept each.
 
-    
-## Usage
-1. Open YouTube video page (you can pause video or let it play)
-2. Open developer console (F12)
-3. Copy-paste JS code into browser console and run (hit enter)
-    
+basic--get-screenshot
+basic--write-array-to-file
+basic--write-dom-nodelist-to-file
+get-links-and-image-urls
+get-page-save-html-to-file
+
 ## Requires
 * Browser opened to a YouTube video with developer console exposed.
     
