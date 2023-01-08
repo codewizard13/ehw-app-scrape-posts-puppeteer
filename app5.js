@@ -28,7 +28,6 @@ function getLocalPage() {
 
   // Define local html file path
   filepath = `${LOC_PATH}/sample_01.htm`
-  console.log(filepath)
 
   getContentInfo(filepath)
 
@@ -37,96 +36,63 @@ function getLocalPage() {
 
 function getContentInfo(filePath) {
 
+  // Print horizontal rule to break up code runs
+  console.log(`\n\n\n****************************\n`)
+
+  // Define object to store parsed html page values
+  const outObj = {
+    head: {
+      title: '',
+      meta: [],
+      style: [],
+      script: [],
+      link: []
+    },
+    body: {
+      preamble: '',
+      word: ''
+    }
+  }
+
   // Store local html file to be parsed
   const file = fs.readFileSync(filePath).toString()
   const $ = cheerio.load(file); // USE Cheerio like jQuery
-  
-  
-    // Get title
-    let title = $('title').text()
-    console.log({ title })
-  
-    console.log(`\n${CONSTANTS.horzrule}\n`)
-  
-    // Steve's summary before the actual Word
-    const startEl = $("p:contains('From the Desks of')")
-    
-    // console.log(startEl)
-    const afterPreamble = startEl[0]
-  
-    let outval = startEl[0].parent.name // parent tag name
-    outval = startEl[0].nextSibling
-  
-  
-  
-  
-    const content = startEl[0]
-  
-    // content.each((i, el) => {
-    //   console.table($(el))
-    // })
-  
-    outval = content
-    console.log(outval)
-  
-  
+
+  // Get title
+  outObj.head.title = $('title').text()
+  outObj.body.content = $('body').html()
+
+  // if there is a desk_shultz class element
+  let selectorDesk = $('.desk_shultz')
+  if (selectorDesk) {
+    let [preamble, word] = $('body').html().split(selectorDesk)
+    outObj.body.preamble = preamble
+    outObj.body.word = word
   }
 
-
-
-// function getContentInfo(filePath) {
-
-// // Store local html file to be parsed
-// const file = fs.readFileSync(filePath).toString()
-// const $ = cheerio.load(file); // USE Cheerio like jQuery
-
-
-//   // Get title
-//   let title = $('title').text()
-//   console.log({ title })
-
-//   console.log(`\n${CONSTANTS.horzrule}\n`)
-
-//   // Steve's summary before the actual Word
-//   const startEl = $("p:contains('From the Desks of')")
   
-//   // console.log(startEl)
-//   const afterPreamble = startEl[0]
-
-//   let outval = startEl[0].parent.name // parent tag name
-//   outval = startEl[0].nextSibling
 
 
+  // Steve's summary before the actual Word
+  const startEl = $("p:contains('From the Desks of')")
+
+  // console.log(startEl)
+  const afterPreamble = startEl[0]
+
+  let outval = startEl[0].parent.name // parent tag name
+  outval = startEl[0].nextSibling
+
+  console.log({ outObj })
+
+}
 
 
-//   const content = startEl[0]
+async function start() {
 
-//   // content.each((i, el) => {
-//   //   console.table($(el))
-//   // })
+  const html = getLocalPage()
+}
 
-//   outval = content
-//   console.log(outval)
-
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+start()
 
 
 
@@ -148,35 +114,3 @@ function getTagsInfo(tagName) {
     console.log(content)
   })
 }
-
-
-async function getPageDataAsJSON(URL) { }
-
-
-
-async function start() {
-
-  const html = getLocalPage()
-
-  // const html = await page.content()
-  // console.log(html)
-  const head = {}
-  const body = {}
-
-  // const title = html.querySelector('title')
-  // console.log({title})
-
-
-
-
-
-  // Save data to HTML file
-  // fs.writeFile('sampleTarget.htm', html)
-  // fs.writeFile('elijahWordSample.htm', html)
-
-
-
-
-  // await browser.close()
-}
-start()
