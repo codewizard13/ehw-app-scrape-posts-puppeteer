@@ -8,11 +8,10 @@ PARSE LOCAL FILE FOR HTML
 
 */
 
-
-
-
+// REQUIRE my library
 const { filenameToLines, parseCSVToArray, testUrls, CONSTANTS } = require(`${__dirname}/common/io`)
 
+// REQUIRE scraping and parsing packages
 const Puppeteer = require('puppeteer')
 const cheerio = require('cheerio');
 
@@ -22,22 +21,10 @@ const { dirname } = require('path')
 
 // Define local html file path
 filePath = `${__dirname}/elijahWordSample.htm`
-console.log({ filePath })
 
-// Store local html file to be parse
+// Store local html file to be parsed
 const file = fs.readFileSync(filePath).toString()
-const $ = cheerio.load(file);
-
-
-
-// INACTIVE YET
-async function getRemotePage() {
-
-  const browser = await Puppeteer.launch()
-  const page = await browser.newPage()
-  await page.goto(URL_WORD_LOC)
-
-}
+const $ = cheerio.load(file); // USE Cheerio like jQuery
 
 
 function getLocalPage() {
@@ -47,10 +34,6 @@ function getLocalPage() {
   let title = $('title').text()
   console.log({ title })
 
-  // getTagsInfo('meta')
-  // getTagsInfo('style')
-  // getTagsInfo('script')
-  // getTagsInfo('link')
 
   getContentInfo()
 
