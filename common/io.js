@@ -51,6 +51,11 @@ function replaceBackslash(string) {
 // const URL_WORD_LOC = replaceBackslash( __dirname )
 // `${__dirname}/../../../docs/sowpods.txt`
 
+const CONSTANTS = {
+  horzrule: "*".repeat(30)
+
+}
+
 const testUrls = {
   list: "https://www.elijahlist.com/words/index.html?page=3",
   word: "https://www.elijahlist.com/words/display_word.html?ID=28023",
@@ -64,5 +69,6 @@ targetSelector = 'nav[aria-label="Page navigation"]:first-of-type + div > a'
 module.exports = {
   filenameToLines: filenameToLines,
   parseCSVToArray: parseCSVToArray,
-  testUrls: testUrls
+  testUrls: testUrls,
+  CONSTANTS
 }
