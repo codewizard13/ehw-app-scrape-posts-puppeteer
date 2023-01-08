@@ -28,11 +28,11 @@ Scrape blog (local .html/htm file) post data to JSON object
 ### About the demo folder
 One might expect the `demo/` folder to hold a working demonstration of the app. Nope. This folder holds individual applications of concepts I learned while building this project. Basically, these are all standlone MVPs and the ones that start with "basic" pretty much handle one concept each.
 
-basic--get-screenshot
-basic--write-array-to-file
-basic--write-dom-nodelist-to-file
-get-links-and-image-urls
-get-page-save-html-to-file
+- basic--get-screenshot.js
+- basic--write-array-to-file.js
+- basic--write-dom-nodelist-to-file.js
+- get-links-and-image-urls.js
+- get-page-save-html-to-file.js
 
 ## Requires
 * Browser opened to a YouTube video with developer console exposed.
