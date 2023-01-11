@@ -108,14 +108,19 @@ start()
 
 
 
-// Default is synchronous
+// Default is synchronous, not async
 function getTagsInfo($, tagName) {
   console.log(`\n${CONSTANTS.horzrule}\n`)
+  const results = []
   let tags = $(tagName)
   tags.each((_, e) => {
     let row = $(e)
     let attribs = row.attr()
     let content = row.html().split(';')
-    return content
+    results.push(
+      {attribs: attribs, content: content}
+    )
+    // console.log({results})
+    return results
   })
 }
