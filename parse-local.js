@@ -29,12 +29,16 @@ function getLocalPage() {
   // Define local html file path
   filepath = `${LOC_PATH}/sample_01.htm`
 
-  getContentInfo(filepath)
+  console.log(getLocalContentInfo(filepath))
 
 }
 
-
-function getContentInfo(filePath) {
+/**
+ * 
+ * @param {string} filePath
+ * @return {object} outObj
+ */
+function getLocalContentInfo(filePath) {
 
   // Print horizontal rule to break up code runs
   console.log(`\n\n\n****************************\n`)
@@ -58,20 +62,27 @@ function getContentInfo(filePath) {
   const file = fs.readFileSync(filePath).toString()
   const $ = cheerio.load(file); // USE Cheerio like jQuery
 
-  // Get title
+  const metaTags = getTagsInfo($, 'meta')
+  const styleTags = getTagsInfo($, 'style')
+  const scriptTags = getTagsInfo($, 'script')
+  const linkTags = getTagsInfo($, 'link')
+
+
+  // Store page values
   outObj.head.title = $('title').text()
-  outObj.body.content = $('body').html()
+  outObj.body.content = $('body').html().length
+  outObj.head.meta = metaTags
+  outObj.head.meta = styleTags
+  outObj.head.meta = scriptTags
+  outObj.head.meta = linkTags
 
   // if there is a desk_shultz class element
   let selectorDesk = $('.desk_shultz')
   if (selectorDesk) {
     let [preamble, word] = $('body').html().split(selectorDesk)
-    outObj.body.preamble = preamble
-    outObj.body.word = word
+    outObj.body.preamble = preamble.length
+    outObj.body.word = word.length
   }
-
-  
-
 
   // Steve's summary before the actual Word
   const startEl = $("p:contains('From the Desks of')")
@@ -82,7 +93,7 @@ function getContentInfo(filePath) {
   let outval = startEl[0].parent.name // parent tag name
   outval = startEl[0].nextSibling
 
-  console.log({ outObj })
+  return outObj
 
 }
 
@@ -98,19 +109,13 @@ start()
 
 
 // Default is synchronous
-function getTagsInfo(tagName) {
+function getTagsInfo($, tagName) {
   console.log(`\n${CONSTANTS.horzrule}\n`)
   let tags = $(tagName)
   tags.each((_, e) => {
     let row = $(e)
     let attribs = row.attr()
     let content = row.html().split(';')
-    console.log(`${tagName.toUpperCase()} tag attributes:`, attribs)
-    console.table(attribs)
-    console.log(`${tagName.toUpperCase()} tag inner content:`)
-    // let parsedJSON = JSON.parse(content)
-    // console.log(parsedJSON)
-    // console.log(JSON.stringify(content), null, 4)
-    console.log(content)
+    return content
   })
 }
