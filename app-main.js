@@ -1,7 +1,7 @@
 /*
 Project Name:   EHW APP:  Scrape Local HTML File
 Date Created:   12/31/22
-Date Modified:  01/08/22
+Date Modified:  01/11/22
 Programmer:     Eric L. Hepperle
 
 PARSE LOCAL FILE FOR HTML
