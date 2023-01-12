@@ -29,7 +29,7 @@ function getLocalPage() {
   // Define local html file path
   filepath = `${LOC_PATH}/sample_01.htm`
 
-  console.log(getLocalContentInfo(filepath))
+  return getLocalContentInfo(filepath)
 
 }
 
@@ -59,7 +59,8 @@ function getLocalContentInfo(filePath) {
   }
 
   // Store local html file to be parsed
-  const file = fs.readFileSync(filePath).toString()
+  // const file = fs.readFileSync(filePath).toString()
+  const file = fs.readFileSync(filePath, 'utf8')
   const $ = cheerio.load(file); // USE Cheerio like jQuery
 
   const metaTags = getTagsInfo($, 'meta')
@@ -72,9 +73,9 @@ function getLocalContentInfo(filePath) {
   outObj.head.title = $('title').text()
   outObj.body.content = $('body').html().length
   outObj.head.meta = metaTags
-  outObj.head.meta = styleTags
-  outObj.head.meta = scriptTags
-  outObj.head.meta = linkTags
+  outObj.head.style = styleTags
+  outObj.head.script = scriptTags
+  outObj.head.link = linkTags
 
   // if there is a desk_shultz class element
   let selectorDesk = $('.desk_shultz')
@@ -98,9 +99,10 @@ function getLocalContentInfo(filePath) {
 }
 
 
-async function start() {
+function start() {
 
   const html = getLocalPage()
+  console.log(html)
 }
 
 start()
@@ -116,11 +118,11 @@ function getTagsInfo($, tagName) {
   tags.each((_, e) => {
     let row = $(e)
     let attribs = row.attr()
-    let content = row.html().split(';')
-    results.push(
-      {attribs: attribs, content: content}
-    )
+    let content = row.html()
+    let tempObj = {attribs: attribs, content: content}
+    results.push(tempObj)
     // console.log({results})
-    return results
   })
+  return results
+
 }
