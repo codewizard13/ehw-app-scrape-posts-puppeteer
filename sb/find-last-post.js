@@ -49,9 +49,9 @@ ${id} | ${title}
 
       try {
         const content = await page.evaluate(() => {
-          return document.querySelector('#word-truncate').textContent
+          return document.querySelector('#word-truncate').textContent.trim()
         })
-        const excerpt = content.trim().slice(0, 175)
+        const excerpt = content.slice(0, 175)
         console.log(`Excerpt: ${excerpt}\n`)
       } catch {}
       // console.log(`${id} | ${title}`)
