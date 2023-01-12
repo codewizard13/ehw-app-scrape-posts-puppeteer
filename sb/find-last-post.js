@@ -34,20 +34,33 @@ async function getLastPost(urlPrefix, startID = 0) {
     await page.goto(pageUrl)
 
     const title = await page.title()
-    // const content = await page.evaluate(() => {
-    //   return document.querySelector('#word-truncate').textContent
-    // })
+
 
     if (title === '') {
       invalidID = true
     }
     else {
       // Print ID  and title
-      console.log(`${id} | ${title}`)
+      const literal = `
+--- --- --- --- ---
+${id} | ${title}
+      `
+      console.log(literal)
+
+      try {
+        const content = await page.evaluate(() => {
+          return document.querySelector('#word-truncate').textContent
+        })
+        const excerpt = content.trim().slice(0, 175)
+        console.log(`Excerpt: ${excerpt}\n`)
+      } catch {}
+      // console.log(`${id} | ${title}`)
       // Increment ID by one
       id++
 
     }
+
+
 
   }
 
